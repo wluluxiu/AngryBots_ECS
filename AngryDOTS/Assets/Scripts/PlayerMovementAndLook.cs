@@ -15,6 +15,8 @@ public class PlayerMovementAndLook : MonoBehaviour
 	[Header("Animation")]
 	public Animator playerAnimator;
 
+	public DragDir dragDir;
+	
 	Rigidbody playerRigidbody;
 	bool isDead;
 
@@ -28,34 +30,17 @@ public class PlayerMovementAndLook : MonoBehaviour
 		if (isDead)
 			return;
 
-		//Arrow Key Input
-		float h = Input.GetAxis("Horizontal");
-		float v = Input.GetAxis("Vertical");
-
-		Vector3 inputDirection = new Vector3(h, 0, v);
-
-		//Camera Direction
-		var cameraForward = mainCamera.transform.forward;
-		var cameraRight = mainCamera.transform.right;
-
-		cameraForward.y = 0f;
-		cameraRight.y = 0f;
-
-		//Try not to use var for roadshows or learning code
-		Vector3 desiredDirection = cameraForward * inputDirection.z + cameraRight * inputDirection.x;
-		
-		//Why not just pass the vector instead of breaking it up only to remake it on the other side?
+		Vector3 desiredDirection = dragDir.dir;
 		MoveThePlayer(desiredDirection);
 		TurnThePlayer();
 		AnimateThePlayer(desiredDirection);
-		
 	}
 
-	void MoveThePlayer(Vector3 desiredDirection)
+	public void MoveThePlayer(Vector3 desiredDirection)
 	{
 		Vector3 movement = new Vector3(desiredDirection.x, 0f, desiredDirection.z);
 		movement = movement.normalized * speed * Time.deltaTime;
-
+	
 		playerRigidbody.MovePosition(transform.position + movement);
 	}
 
