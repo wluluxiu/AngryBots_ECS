@@ -15,8 +15,10 @@ public class PlayerMovementAndLook : MonoBehaviour
 	[Header("Animation")]
 	public Animator playerAnimator;
 
+	public MeshRenderer mapTrans;
 	public DragDir dragDir;
-	
+
+	public float offset;
 	Rigidbody playerRigidbody;
 	bool isDead;
 
@@ -40,8 +42,11 @@ public class PlayerMovementAndLook : MonoBehaviour
 	{
 		Vector3 movement = new Vector3(desiredDirection.x, 0f, desiredDirection.z);
 		movement = movement.normalized * speed * Time.deltaTime;
-	
-		playerRigidbody.MovePosition(transform.position + movement);
+
+		Vector3 newPos = transform.position + movement;
+		float camX = Mathf.Clamp(newPos.x, mapTrans.bounds.min.x + offset,mapTrans.bounds.max.x - offset ); 
+		float camZ = Mathf.Clamp(newPos.z, mapTrans.bounds.min.z + offset, mapTrans.bounds.max.z - offset);
+		playerRigidbody.MovePosition(new Vector3(camX, newPos.y, camZ));
 	}
 
 	void TurnThePlayer()

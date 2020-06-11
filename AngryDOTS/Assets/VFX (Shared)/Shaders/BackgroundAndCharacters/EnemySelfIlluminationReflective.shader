@@ -27,8 +27,7 @@ Shader "AngryBots/Character/EnemySelfIlluminationReflective" {
 	}
 	
 	CGINCLUDE
-
-	#include "UnityCG.cginc"		
+	
 	#include "AngryInclude.cginc"
 				
 	uniform half4 _MainTex_ST;
@@ -66,7 +65,7 @@ Shader "AngryBots/Character/EnemySelfIlluminationReflective" {
 	SubShader {
 		LOD 300
 		Lighting on
-		Tags { "RenderType"="Opaque" "Reflection" = "RenderReflectionOpaque" "Queue"="Geometry" }	
+		Tags { "RenderType"="Opaque" "Reflection" = "RenderReflectionOpaque" "Queue"="Geometry"  }	
 				
 		Pass {
 	
